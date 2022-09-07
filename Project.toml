@@ -1,0 +1,7 @@
+name = "Limpse"
+uuid = "f421a15e-b252-415c-9871-9e378726db79"
+authors = ["marcobonici <bonici.marco@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+SimpleChains = "de6bee2f-e2f4-4ec7-b6ed-219cc6f6e9e5"
