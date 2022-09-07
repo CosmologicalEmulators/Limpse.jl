@@ -38,11 +38,8 @@ function compute_Pk(input_params, PkEmulator::AbstractPkEmulators)
     ΩM = (input_params[4]+input_params[5])/(input_params[3]^2)
     As = exp(input_params[1])*1e-10
     ns = input_params[2]
-    input = deepcopy(input_params[3:7])
-    maximin_input!(input, PkEmulator.InMinMax)
-    output = Array(run_emulator(input, PkEmulator.TrainedEmulator))
-    inv_maximin_output!(output, PkEmulator.OutMinMax)
-    return @. (P_prim(PkEmulator.kgrid, As, ns) * output ^2 * tilde_Δ(PkEmulator.kgrid, ΩM, H0)^2)
+    Tk = compute_Tk(input_params, PkEmulator)
+    return @. (P_prim(PkEmulator.kgrid, As, ns) * Tk^2 * tilde_Δ(PkEmulator.kgrid, ΩM, H0)^2)
 end
 
 function compute_Tk(input_params, PkEmulator::AbstractPkEmulators)
@@ -52,7 +49,6 @@ function compute_Tk(input_params, PkEmulator::AbstractPkEmulators)
     inv_maximin_output!(output, PkEmulator.OutMinMax)
     return output
 end
-
 
 function run_emulator(input, trained_emulator::SimpleChainsEmulator)
     return trained_emulator.Architecture(input, trained_emulator.Weights)
