@@ -70,4 +70,13 @@ function logspace(min, max, n)
     return exp10.(logarray)
 end
 
+function load_emulators(path)
+    loaded = BSON.load(path)
+
+    Pk = loaded[:Pk]
+
+    return Pk
+
+end
+
 end # module
