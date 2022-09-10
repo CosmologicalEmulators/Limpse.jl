@@ -2,6 +2,7 @@ module Limpse
 
 using Base: @kwdef
 using SimpleChains
+using BSON
 
 function maximin_input!(x, in_MinMax)
     for i in 1:length(x)
