@@ -40,7 +40,7 @@ function compute_Pk(input_params, PkEmulator::AbstractPkEmulators)
     As = exp(input_params[1])*1e-10
     ns = input_params[2]
     Tk = compute_Tk(input_params, PkEmulator)
-    return @. (P_prim(PkEmulator.kgrid, As, ns) * Tk^2 * tilde_Δ(PkEmulator.kgrid, ΩM, H0)^2)
+    return @. (P_prim(PkEmulator.kgrid, As, ns, H0/100) * Tk^2 * tilde_Δ(PkEmulator.kgrid, ΩM, H0)^2)
 end
 
 function compute_Tk(input_params, PkEmulator::AbstractPkEmulators)
@@ -63,6 +63,11 @@ end
 function P_prim(k, As, ns)
     return @. As * (k/0.05)^(ns-1)*2*π^2/(k^3)
 end
+
+function P_prim(k, As, ns, h)
+    return @. As * (k*h/0.05)^(ns-1)*2*π^2/(k^3)
+end
+
 
 function logspace(min, max, n)
     logmin = log10(min)
